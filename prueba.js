@@ -22,17 +22,20 @@ var local = {
     ]
 };
 
-function precioMaquina(parametros) {
+//EJERCICIO 1. precioMaquina(componentes): recibe un array de componentes y devuelve el precio de la máquina que se puede
+//armar con esos componentes, que es la suma de los precios de cada componente incluido.
+
+function precioMaquina(componentes) {
     var precioTotal = 0;
 
-    for (var i = 0; i < parametros.length; i++) {
+    for (var i = 0; i < componentes.length; i++) {
         //console.log(parametros[i])
 
         for (var j = 0; j < local.precios.length; j++) {
             // console.log(local.precios[j].componente)
             // console.log(local.precios[j].precio)
 
-            if (parametros[i] === local.precios[j].componente) {
+            if (componentes[i] === local.precios[j].componente) {
                 precioTotal = precioTotal + local.precios[j].precio
             }
         }
@@ -43,3 +46,27 @@ function precioMaquina(parametros) {
 
 console.log(precioMaquina(["Monitor GPRS 3000", "Motherboard ASUS 1500"]));
 
+
+
+//EJERCICIO 2. cantidadVentasComponente(componente): recibe un componente y devuelve la cantidad de veces que fue vendido, o 
+//sea que formó parte de una máquina que se vendió. La lista de ventas no se pasa por parámetro, se asume que está 
+//identificada por la variable ventas.
+
+function cantidadVentasComponente(componente) {
+    var cantidadVendida = 0;
+
+    for (var i = 0; i < local.ventas.length; i++) {
+        //console.log(local.ventas);
+
+        for (var j = 0; j < local.ventas[i].componentes.length; j++) {
+            //console.log(local.ventas[i].componentes)
+
+            if (componente === local.ventas[i].componentes[j]) {
+                cantidadVendida++
+            }
+        }
+    }
+    return cantidadVendida
+}
+
+console.log(cantidadVentasComponente("Monitor ASC 543")); // 2
