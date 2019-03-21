@@ -61,7 +61,7 @@ function cantidadVentasComponente(componente) {
         for (var j = 0; j < local.ventas[i].componentes.length; j++) {
             //console.log(local.ventas[i].componentes)
 
-            if (componente === local.ventas[i].componentes[j]) {
+            if (local.ventas[i].componentes[j] === componente) {
                 cantidadVendida++
             }
         }
@@ -70,6 +70,8 @@ function cantidadVentasComponente(componente) {
 }
 
 console.log(cantidadVentasComponente("Monitor ASC 543")); // 2
+// console.log(cantidadVentasComponente("Motherboard ASUS 1200"));
+// console.log(cantidadVentasComponente("Monitor GPRS 3000"));
 
 
 
@@ -90,18 +92,18 @@ function vendedoraDelMes(mes, anio) {
 
         if (local.ventas[i].fecha.getMonth() + 1 == mes && local.ventas[i].fecha.getFullYear() == anio) {
             //console.log(precioMaquina(local.ventas[i].componentes))
-     
 
-        if (local.ventas[i].nombreVendedora == "Ada") {
-            //console.log(precioMaquina(local.ventas[i].componentes))
-            ventasAda = ventasAda + precioMaquina(local.ventas[i].componentes)
-        }
 
-        if (local.ventas[i].nombreVendedora == "Grace") {
-            //console.log(precioMaquina(local.ventas[i].componentes))
-            ventasGrace = ventasGrace + precioMaquina(local.ventas[i].componentes)
+            if (local.ventas[i].nombreVendedora == "Ada") {
+                //console.log(precioMaquina(local.ventas[i].componentes))
+                ventasAda = ventasAda + precioMaquina(local.ventas[i].componentes)
+            }
+
+            if (local.ventas[i].nombreVendedora == "Grace") {
+                //console.log(precioMaquina(local.ventas[i].componentes))
+                ventasGrace = ventasGrace + precioMaquina(local.ventas[i].componentes)
+            }
         }
-    }
 
     } if (ventasAda < ventasGrace) {
         console.log("Gano Ada con " + ventasAda)
@@ -122,15 +124,74 @@ function ventasMes(mes, anio) {
 
     var ventasTotal = 0
 
-    for (var i = 0; i < local.ventas.length; i++) {       
+    for (var i = 0; i < local.ventas.length; i++) {
 
         if (local.ventas[i].fecha.getMonth() + 1 == mes && local.ventas[i].fecha.getFullYear() == anio) {
             //console.log(precioMaquina(local.ventas[i].componentes))
-            ventasTotal = ventasTotal + precioMaquina(local.ventas[i].componentes)            
+            ventasTotal = ventasTotal + precioMaquina(local.ventas[i].componentes)
         }
     }
     return ventasTotal
 }
 
-console.log( ventasMes(1, 2019) ); // 1250
+console.log('Cantidad de ventas mes Enero ' + ventasMes(1, 2019)); // 1250
 
+// EJERCICIO 1E. ventasVendedora(nombre): Obtener las ventas totales realizadas por una vendedora sin límite de fecha.
+
+function ventasVendedora(nombre) {
+
+    var ventasTotales = 0;
+
+    for (var i = 0; i < local.ventas.length; i++) {
+        if (local.ventas[i].nombreVendedora == nombre) {
+            ventasTotales = ventasTotales + precioMaquina(local.ventas[i].componentes)
+        }
+    }
+    return ventasTotales
+}
+
+console.log('Ventas totales realizadas por Grace ' + ventasVendedora("Grace")); // 900
+
+
+//EJERCICIO 1F. componenteMasVendido(): Devuelve el nombre del componente que más ventas tuvo historicamente. El dato de 
+//la cantidad de ventas es el que indica la función cantidadVentasComponente
+
+function componenteMasVendido(){
+
+    var masVendido = 0;
+    var arrayActual = 0;
+    var nombre;
+
+    for (var i = 0; i< local.precios.length; i++){
+        arrayActual = cantidadVentasComponente(local.precios[i].componente);
+        //console.log(cantidadVentasComponente(local.precios[i].componente))
+
+        if (arrayActual> masVendido){
+            masVendido=arrayActual;
+            nombre=local.precios[i].componente;
+        }
+    arrayActual=0;    
+    }
+    return nombre
+}
+
+console.log( componenteMasVendido() ); // Monitor GPRS 3000
+
+
+//EJERCICIO 1G. huboVentas(mes, anio): que indica si hubo ventas en un mes determinado.
+
+function huboVentas(mes, anio){
+
+    var ventasMes = 0;
+
+    for (var i = 0; i < local.ventas.length; i++) {
+        if (local.ventas[i].fecha.getMonth() + 1 == mes && local.ventas[i].fecha.getFullYear() == anio) {
+            //console.log(precioMaquina(local.ventas[i].componentes))
+            ventasMes = ventasMes + precioMaquina(local.ventas[i].componentes)
+        }
+        
+    }
+    return ventasMes
+}
+
+console.log( huboVentas(3, 2019) ); // false
