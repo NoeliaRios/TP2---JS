@@ -81,8 +81,7 @@ console.log(cantidadVentasComponente("Monitor ASC 543")); // 2
 // que indica la función precioMaquina.
 
 function vendedoraDelMes(mes, anio) {
-
-    var nuevaVarParaGuardarcomponentes = 0;
+    
     var ventasAda = 0;
     var ventasGrace = 0;
 
@@ -106,11 +105,11 @@ function vendedoraDelMes(mes, anio) {
             }
         }
 
-    } if (ventasAda < ventasGrace) {
+    } if (ventasAda > ventasGrace) {
         console.log("Gano Ada con " + ventasAda)
         return 'Ada'
     }
-    else if (ventasAda > ventasGrace) {
+    else if (ventasAda < ventasGrace) {
         console.log("gano grace con " + ventasGrace)
         return "grace"
     }
