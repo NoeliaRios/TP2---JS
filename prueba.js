@@ -1,3 +1,12 @@
+// Noe, te dejo mis observaciones a tu TP.
+// Fui dejandote varios comentarios a lo largo del trabajo. En general, son observaciones sobre detalles
+// O maneras alternativas de hacer algunas funciones para ahorrar codigo o no hardcodear
+// Tu trabajo es muy bueno, se nota el esfuerzo y la comprension de los temas. 
+// Un detalle que te comento para cuando hagas challenges tecnicos en empresas, es 
+// la importancia de borrar todos los console.log al momento de entregar un trabajo
+// Suma mucho a la hora de presentarlo
+
+
 var local = {
     vendedoras: ["Ada", "Grace", "Hedy", "Sheryl"],
 
@@ -31,6 +40,10 @@ function precioMaquina(componentes) {
 
     for (var i = 0; i < componentes.length; i++) {
         //console.log(parametros[i])
+        
+        // esto es un detalle, pero si fueras a entregar un codigo a un challenge para una empresa, por ej
+        // seria muy bueno que borres todos los console.log, incluso los que estan comentados
+        // el console.log es muy util para codear, pero no debe aparecer en un trabajo terminado
 
         for (var j = 0; j < local.precios.length; j++) {
             // console.log(local.precios[j].componente)
@@ -118,6 +131,39 @@ function vendedoraDelMes(mes, anio) {
 console.log(vendedoraDelMes(1, 2019)); // "Ada" (vendio por $670, una máquina de $320 y otra de $350)
 
 
+// te dejo el codigo sin "hardcodear" los nombres:
+// function vendedoraDelMes(mes, anio) {
+//     var arrayVendedoras = [];
+//     for (var i = 0; i < local.vendedoras.length; i++) {
+//         var vendorasObj = {
+//             nombre: local.vendedoras[i],
+//             ventas: 0,
+//         }
+//         for (var j = 0; j < local.ventas.length; j++) {
+//             if (local.ventas[j].fecha.getMonth() + 1 == mes && local.ventas[i].fecha.getFullYear() == anio) {
+//                 var precioComponentes = precioMaquina(local.ventas[j].componentes)
+//                 if (local.vendedoras[i] === local.ventas[j].nombreVendedora) {
+//                     if (vendorasObj.nombre === local.ventas[j].nombreVendedora) {
+//                         vendorasObj.ventas = vendorasObj.ventas + precioComponentes;
+//                     }
+//                 }
+//             }
+//         }
+//         arrayVendedoras.push(vendorasObj)
+//     }
+
+//     var mejorVendedora;
+//     var ventaMax = 0;
+
+//     for (var k = 0; k < arrayVendedoras.length; k++) {
+//         if (arrayVendedoras[k].ventas) {
+//             ventaMax = arrayVendedoras[k].ventas;
+//             mejorVendedora = arrayVendedoras[k].nombre;
+//             return mejorVendedora 
+//         }
+//     }
+// }
+
 //EJERCICIO 1D. ventasMes(mes, anio): Obtener las ventas de un mes.
 
 function ventasMes(mes, anio) {
@@ -175,6 +221,8 @@ function componenteMasVendido() {
     return nombre
 }
 
+// bien!
+
 console.log(componenteMasVendido()); // Monitor GPRS 3000
 
 
@@ -186,6 +234,9 @@ function huboVentas(mes, anio) {
 
     for (var i = 0; i < local.ventas.length; i++) {
         if (local.ventas[i].fecha.getMonth() + 1 == mes && local.ventas[i].fecha.getFullYear() == anio) {
+            // salvo si estamos comparando a sabiendas numeros con strings, siempre es recomendable
+            // usar el triple signo igual ===
+            // para tener mas control sobre nuestros datos
             //console.log(precioMaquina(local.ventas[i].componentes))
             ventasMes = true;
         } else {
@@ -195,10 +246,19 @@ function huboVentas(mes, anio) {
     return ventasMes
 }
 
+// una manera de ahorrar codigo es inicializar la variable "ventasMes" en false, asi nos evitamos el "Else". Asi:
 console.log(huboVentas(3, 2019)); // false
 //console.log( huboVentas(1, 2019) );
 
-
+// function huboVentas(mes, anio) {
+//     var ventasMes = false;
+//     for (var i = 0; i < local.ventas.length; i++) {
+//         if (local.ventas[i].fecha.getMonth() + 1 == mes && local.ventas[i].fecha.getFullYear() == anio) {
+//             ventasMes = true;
+//         }
+//     }
+//     return ventasMes
+// }
 // EJERCICIO 2A. En las ventas ya existentes, tenemos que agregar la propiedad sucursal con el valor Centro (ya que es la sucursal original).
 
 for (var i = 0; i < local.ventas.length; i++) {
@@ -271,6 +331,20 @@ function ventasPor(nombreProp, valorProp) {
     }
     return acumVentas
 }
+
+//bien!
+// una manera de resolverlo pasandole un solo parametro seria asi:
+
+// function ventasPor(nombreProp) {
+//     var total = 0;
+//     for (var i = 0; i < local.ventas.length; i++) {
+//         if (local.ventas[i].sucursal === nombreProp || local.ventas[i].nombreVendedora === nombreProp) {
+//             total += precioMaquina(local.ventas[i].componentes);
+//         }
+//     }
+//     return total;
+// }
+
 
 console.log(ventasPor('nombreVendedora', 'Hedy'));
 console.log(ventasPor('sucursal', 'Caballito'));
@@ -345,7 +419,8 @@ function render(){
     var render1= renderPorMes()
     var render2= renderPorSucursal();
     var mensaje= "Producto Estrella: " +componenteMasVendido()
-    var mensajeDos= vendedoraDelMes()
+    var mensajeDos= vendedoraDelMes() // ojo! vendedoraDelMes no sirve si no le pasamos parametros
+    // para este render, necesitabamos una funcion nueva. 
 
     return render1 +" -" +  render2 + " - " + mensaje + " - " + mensajeDos
 }
